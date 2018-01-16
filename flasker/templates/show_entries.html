@@ -1,32 +1,21 @@
 {% extends "layout.html" %}
 {% block blog_body %}
   {% if session.logged_in %}
-	<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-	<table width="100%" border="0">
-		<tr>
-			<td align="right">Title</td>
-			<td><input type=text size=30 name=title></td>
-		</tr>
-		<tr>
-			<td align="right">Text</td>
-			<td><textarea name=blog_text rows=5 cols=40></textarea></td>
-		</tr>
-			<td><input type=submit value=Share></td>
-		<tr>
-		</tr>
-	</table>
-    </form>
-<!--
-	<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <dl>
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
-        <dt>Text:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
-    </form>
--->
+		<form action="{{ url_for('add_entry') }}" method=post class=add-entry> <!-- class definition in CSS -->
+			<table width="100%" border="0">
+			<tr>
+				<td align="right">Title</td>
+				<td><input type=text size=30 name=title></td>
+			</tr>
+			<tr>
+				<td align="right">Text</td>
+				<td><textarea name=blog_text rows=5 cols=40></textarea></td>
+			</tr>
+					<td><input type=submit value=Share></td>
+			<tr>
+			</tr>
+		</table>
+	</form>
   {% endif %}
 	<table border="0" width="100%" class-entries>
 			<tr>
@@ -35,7 +24,9 @@
 			</tr>
 		{% for entry in entries %}
 			<tr>
-				<td>{{ entry.title }}</td>
+<!--				<td><a href="http://www.google.com">{{ entry.id }}</a></td> -->
+<!--				<td><a href="http://www.yahoo.com">{{ entry.title }}</a></td> -->
+				<td><a href="{{ url_for('on_title_click') }}">{{ entry.title }}</a></td>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}

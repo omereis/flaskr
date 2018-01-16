@@ -57,6 +57,12 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
+#@app.route('/on_title_click/', methods=['POST'])
+@app.route('/on_title_click/')
+def on_title_click():
+    print('just_clicked')
+    return redirect(url_for('show_entries'))
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
