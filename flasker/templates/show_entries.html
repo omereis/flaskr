@@ -1,7 +1,23 @@
 {% extends "layout.html" %}
 {% block blog_body %}
   {% if session.logged_in %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+	<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+	<table width="100%" border="0">
+		<tr>
+			<td align="right">Title</td>
+			<td><input type=text size=30 name=title></td>
+		</tr>
+		<tr>
+			<td align="right">Text</td>
+			<td><textarea name=blog_text rows=5 cols=40></textarea></td>
+		</tr>
+			<td><input type=submit value=Share></td>
+		<tr>
+		</tr>
+	</table>
+    </form>
+<!--
+	<form action="{{ url_for('add_entry') }}" method=post class=add-entry>
       <dl>
         <dt>Title:
         <dd><input type=text size=30 name=title>
@@ -10,12 +26,21 @@
         <dd><input type=submit value=Share>
       </dl>
     </form>
+-->
   {% endif %}
-  <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
-  {% endfor %}
-  </ul>
+	<table border="0" width="100%" class-entries>
+			<tr>
+				<th width=30%>Title</th>
+				<th>Text</th>
+			</tr>
+		{% for entry in entries %}
+			<tr>
+				<td>{{ entry.title }}</td>
+				<td>{{ entry.entry_text }}</td>
+			</tr>
+		{% else %}
+			<li><em>Unbelievable.  No entries here so far</em>
+		{% endfor %}
+	</table>
+	
 {% endblock %}

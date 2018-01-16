@@ -41,7 +41,6 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-#    cur = db.execute('select title, entry_text from entries order by id desc')
     cur = db.execute('select * from entries order by id desc')
     blog_entries = cur.fetchall()
     return render_template('show_entries.html', entries=blog_entries)
@@ -51,8 +50,9 @@ def add_entry():
     if not session.get('logged_in'):
         abort(401)
     db = get_db()
-    db.execute('insert into entries (title, entry_text) values (?, ?)',
-                 [request.form['title'], request.form['blog_text']])
+    strSql = "insert into entries (title, entry_text) values ('%s', '%s');" % \
+                (request.form['title'], request.form['blog_text'])
+    db.execute((strSql))
     db.commit()
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
