@@ -58,9 +58,14 @@ def add_entry():
     return redirect(url_for('show_entries'))
 
 #@app.route('/on_title_click/', methods=['POST'])
-@app.route('/on_title_click/')
-def on_title_click():
-    print('just_clicked')
+@app.route('/on_title_click/<string:param>')
+def on_title_click(param):
+#def on_title_click(param='python_param'):
+    if (param):
+        strParam = str(param)
+    else:
+        strParam = 'null'
+    print('just_clicked with param="%s"' % strParam)
     return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])

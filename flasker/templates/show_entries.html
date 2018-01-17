@@ -26,7 +26,11 @@
 			<tr>
 <!--				<td><a href="http://www.google.com">{{ entry.id }}</a></td> -->
 <!--				<td><a href="http://www.yahoo.com">{{ entry.title }}</a></td> -->
-				<td><a href="{{ url_for('on_title_click') }}">{{ entry.title }}</a></td>
+
+<!--
+				<td><a href="{{ url_for('on_title_click', param = '17') }}">{{ entry.title }}</a></td>
+-->
+				<td><a href="{{ url_for('on_title_click', param = 'html_param') }}">{{ entry.title }}</a></td>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}
