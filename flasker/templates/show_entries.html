@@ -19,18 +19,14 @@
   {% endif %}
 	<table border="0" width="100%" class-entries>
 			<tr>
+				<th>Item</th>
 				<th width=30%>Title</th>
 				<th>Text</th>
 			</tr>
 		{% for entry in entries %}
 			<tr>
-<!--				<td><a href="http://www.google.com">{{ entry.id }}</a></td> -->
-<!--				<td><a href="http://www.yahoo.com">{{ entry.title }}</a></td> -->
-
-<!--
-				<td><a href="{{ url_for('on_title_click', param = '17') }}">{{ entry.title }}</a></td>
--->
-				<td><a href="{{ url_for('on_title_click', param = 'html_param') }}">{{ entry.title }}</a></td>
+				<td><input type="checkbox" value="{{ entry.id }}"></td>
+				<td><a href="{{ url_for('on_title_click', param = '30') }}" id={{ entry.id }}>{{ entry.title }}</a></td>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}

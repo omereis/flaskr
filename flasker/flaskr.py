@@ -57,15 +57,15 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
-#@app.route('/on_title_click/', methods=['POST'])
 @app.route('/on_title_click/<string:param>')
 def on_title_click(param):
-#def on_title_click(param='python_param'):
-    if (param):
-        strParam = str(param)
-    else:
-        strParam = 'null'
-    print('just_clicked with param="%s"' % strParam)
+    if session.get('logged_in') and param:
+        db = get_db()
+        id = int(param)
+        strSql = ('select * from entries where id=%d;' % id)
+        cur = db.execute('select * from entries order by id desc')
+        blog_entry = cur.fetchall()
+        print(strSql)
     return redirect(url_for('show_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
