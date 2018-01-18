@@ -52,14 +52,20 @@ def add_entry():
     db = get_db()
     strSql = "insert into entries (title, entry_text) values ('%s', '%s');" % \
                 (request.form['title'], request.form['blog_text'])
-    db.execute((strSql))
+    db.execute(strSql)
     db.commit()
     flash('New entry was successfully posted')
+    print("str(url_for: " + str(url_for('show_entries')))
     return redirect(url_for('show_entries'))
 
 @app.route('/on_title_click/<string:param>')
 def on_title_click(param):
     if session.get('logged_in') and param:
+        print ("preparing for request")
+        blog_entry_id = request.form['id']
+        print ("request granted")
+        print ("param: %d" % param)
+        print ("blog_entry_id: %d" % blog_entry_id)
         db = get_db()
         id = int(param)
         strSql = ('select * from entries where id=%d;' % id)
@@ -97,3 +103,8 @@ app.config.update(dict(
     PASSWORD='purple'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
+if __name__ == "__main__":
+    try:
+        app.run (debug=True)
+    except Exception as excp:
+        print ("Error:\n" + str(excp.args))
