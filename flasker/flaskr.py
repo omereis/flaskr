@@ -50,13 +50,14 @@ def show_db_entries():
     print("show_db_entries")
     strLink = "'show_entries.html', entries=blog_entries"
     print ("show_db_entris: %s" % strLink)
-    return render_template('show_entries.html', entries=blog_entries)
+    blog_title = ""
+    return render_template('show_entries.html', entries=blog_entries, blog_title=blog_title)
 #    return render_template('show_entries.html', entries=blog_entries)
 #    return render_template(strLink)
 
 @app.route('/href_click')
 def href_click():
-    blog_title = "blog title"
+    blog_title = "this is my title"
     blog_text = "blog_text"
     print("==============================")
     print("href_click")
