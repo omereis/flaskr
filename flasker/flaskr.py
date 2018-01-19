@@ -39,11 +39,20 @@ def close_db(error):
         g.sqlite_db.close()
 
 @app.route('/')
-def show_entries():
+def show_db_entries():
+    if session:
+        print(str(session))
+    else:
+        print ("session is null")
     db = get_db()
     cur = db.execute('select * from entries order by id desc')
     blog_entries = cur.fetchall()
+    print("show_db_entries")
+    strLink = "'show_entries.html', entries=blog_entries"
+    print ("show_db_entris: %s" % strLink)
     return render_template('show_entries.html', entries=blog_entries)
+#    return render_template('show_entries.html', entries=blog_entries)
+#    return render_template(strLink)
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -55,24 +64,29 @@ def add_entry():
     db.execute(strSql)
     db.commit()
     flash('New entry was successfully posted')
-    print("str(url_for: " + str(url_for('show_entries')))
-    return redirect(url_for('show_entries'))
+    print("add_entry")
+    return redirect(url_for('show_db_entries'))
 
 @app.route('/on_title_click/<string:param>')
 def on_title_click(param):
+    print("on_title_click")
     if session.get('logged_in') and param:
-        print ("preparing for request")
-        blog_entry_id = request.form['id']
-        print ("request granted")
-        print ("param: %d" % param)
-        print ("blog_entry_id: %d" % blog_entry_id)
-        db = get_db()
-        id = int(param)
-        strSql = ('select * from entries where id=%d;' % id)
-        cur = db.execute('select * from entries order by id desc')
-        blog_entry = cur.fetchall()
-        print(strSql)
-    return redirect(url_for('show_entries'))
+        print("logged in")
+        try:
+            print ("preparing for request")
+            blog_entry_id = request.form['id']
+            print ("request granted")
+            print ("param: %d" % param)
+            print ("blog_entry_id: %d" % blog_entry_id)
+            db = get_db()
+            id = int(param)
+            strSql = ('select * from entries where id=%d;' % id)
+            cur = db.execute('select * from entries order by id desc')
+            blog_entry = cur.fetchall()
+            print(strSql)
+        except Exception as excp:
+            print ("Error:\n" + str(excp.args))
+    return redirect(url_for('show_db_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -85,7 +99,7 @@ def login():
         else:
             session['logged_in'] = True
             flash(app.config['USERNAME'] + ': You were logged in')
-            return redirect(url_for('show_entries'))
+            return redirect(url_for('show_db_entries'))
         flash('NOT logged in')
     return render_template('login.html', error=error)
 
@@ -93,7 +107,7 @@ def login():
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('show_db_entries'))
 
 # Load default config and override config from an environment variable
 app.config.update(dict(

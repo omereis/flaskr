@@ -17,7 +17,10 @@
 		</table>
 	</form>
   {% endif %}
-	<table border="0" width="100%" class-entries>
+<!--
+  	<table border="0" width="100%" class-entries>
+-->
+	<table border="0" width="100%">
 			<tr>
 				<th>Item</th>
 				<th width=30%>Title</th>
@@ -26,7 +29,7 @@
 		{% for entry in entries %}
 			<tr>
 				<td><input type="checkbox" value="{{ entry.id }}"></td>
-				<td><a href="{{ url_for('on_title_click', param = '30') }}" id={{ entry.id }}>{{ entry.title }}</a></td>
+				<td><a href="{{ url_for('on_title_click', param = '30') }}" name={{ entry.id }}>{{ entry.title }}</a></td>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}
