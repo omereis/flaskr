@@ -41,7 +41,7 @@ def close_db(error):
 @app.route('/')
 def show_db_entries():
     if session:
-        print(str(session))
+        print("session: " + str(session))
     else:
         print ("session is null")
     db = get_db()
@@ -53,6 +53,18 @@ def show_db_entries():
     return render_template('show_entries.html', entries=blog_entries)
 #    return render_template('show_entries.html', entries=blog_entries)
 #    return render_template(strLink)
+
+@app.route('/href_click')
+def href_click():
+    blog_title = "blog title"
+    blog_text = "blog_text"
+    print("==============================")
+    print("href_click")
+    db = get_db()
+    cur = db.execute('select * from entries order by id desc')
+    blog_entries = cur.fetchall()
+    return render_template('show_entries.html', entries=blog_entries, blog_title=blog_title)
+#    return redirect(url_for('show_db_entries'))
 
 @app.route('/add', methods=['POST'])
 def add_entry():
@@ -67,8 +79,11 @@ def add_entry():
     print("add_entry")
     return redirect(url_for('show_db_entries'))
 
-@app.route('/on_title_click/<string:param>')
-def on_title_click(param):
+#@app.route('/on_title_click/<string:param>')
+@app.route('/on_title_click/')
+#def on_title_click(param):
+def on_title_click():
+    param =  None
     print("on_title_click")
     if session.get('logged_in') and param:
         print("logged in")
