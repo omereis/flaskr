@@ -88,9 +88,7 @@ def add_entry():
     print("add_entry")
     return redirect(url_for('show_db_entries'))
 
-#@app.route('/on_title_click/<string:param>')
-@app.route('/on_title_click/')
-#def on_title_click(param):
+@app.route('/on_title_click/', methods=['POST'])
 def on_title_click():
     param =  None
     print("\non_title_click\n")
@@ -121,6 +119,13 @@ def on_title_click():
             print ("Error: " + str(excp.args))
     else:
         print("logged out")
+    return redirect(url_for('show_db_entries'))
+
+@app.route('/my_show_click/', methods=['POST'])
+def on_show_click():
+    print("\n\n-------------------\n")
+    print("on_show_click\n")
+    print("request.form: " + str(request.form))
     return redirect(url_for('show_db_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])

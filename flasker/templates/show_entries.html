@@ -24,36 +24,27 @@
   {% endif %}
   	<p align="center">
 			<a href="">test href</a>
-<!--
-			<a href="{{ url_for ('href_click') }}">test href</a>
--->
 	</p>
-  <!--
--->
-<!--		<a href="{{ url_for ('href_click') }}">test href</a></p> 
-	<p align="center">
-		<a href="">test href</a></p>
--->
 	<br>
+	<form action="{{ url_for('on_show_click') }}" method=post>
+			<input type=text size=30 name="blog_entry_box" placeholder="blog entry title"><br>
+			<input type=submit value=Show>
+	</form>
 	<table border="0" width="100%">
-		<form>
-			<tr>
-				<th>Item</th>
-				<th width=30%>Title</th>
-				<th>Text</th>
-			</tr>
+		<tr>
+			<th>Item</th>
+			<th width=30%>Title</th>
+			<th>Text</th>
+		</tr>
 		{% for entry in entries %}
 			<tr>
 				<td><input type="checkbox" value="{{ entry.id }}"></td>
-				<form name="title_click" method=post>
-					<td><a href="{{ url_for('on_title_click') }}" name={{ entry.id }}>{{ entry.title }}</a></td>
-				</form>
+				<td><u>{{ entry.title }}</u></td>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}
 			<li><em>Unbelievable.  No entries here so far</em>
 		{% endfor %}
-	</form>
-</table>
+		</table>
 	
 {% endblock %}
