@@ -1,32 +1,42 @@
 {% extends "layout.html" %}
 {% block blog_body %}
   {% if session.logged_in %}
-		<form action="{{ url_for('add_entry') }}" method=post class=add-entry> <!-- class definition in CSS -->
-			<table width="100%" border="0">
+  <br>
+	  <form action="{{ url_for('add_entry') }}" method=post class=add-entry> <!-- class definition in CSS -->
+		<table width="100%" border="0">
 			<tr>
 				<td align="right">Title</td>
 				{% if blog_title %}
-					<td><input type=text size=30 name=title value={{ blog_title }}></td>
+					<td><input type=text size=30 name=title value="{{ blog_title }}"><br></td>
 				{% else%}
-					<td><input type=text size=30 name=title></td>
+					<td><input type=text size=30 name=title placeholder="blog entry title"></td>
 				{% endif %}
 			</tr>
 			<tr>
 				<td align="right">Text</td>
 				<td><textarea name=blog_text rows=5 cols=40></textarea></td>
 			</tr>
-					<td><input type=submit value=Share></td>
+				<td><input type=submit value=Share></td>
 			<tr>
 			</tr>
 		</table>
 	</form>
   {% endif %}
+  	<p align="center">
+			<a href="">test href</a>
 <!--
-  	<table border="0" width="100%" class-entries>
+			<a href="{{ url_for ('href_click') }}">test href</a>
 -->
-	<p><a href="{{ url_for ('href_click') }}">test href</a></p>
+	</p>
+  <!--
+-->
+<!--		<a href="{{ url_for ('href_click') }}">test href</a></p> 
+	<p align="center">
+		<a href="">test href</a></p>
+-->
 	<br>
 	<table border="0" width="100%">
+		<form>
 			<tr>
 				<th>Item</th>
 				<th width=30%>Title</th>
@@ -35,12 +45,15 @@
 		{% for entry in entries %}
 			<tr>
 				<td><input type="checkbox" value="{{ entry.id }}"></td>
-				<td><a href="{{ url_for('on_title_click') }}" name={{ entry.id }}>{{ entry.title }}</a></td>
+				<form name="title_click" method=post>
+					<td><a href="{{ url_for('on_title_click') }}" name={{ entry.id }}>{{ entry.title }}</a></td>
+				</form>
 				<td>{{ entry.entry_text }}</td>
 			</tr>
 		{% else %}
 			<li><em>Unbelievable.  No entries here so far</em>
 		{% endfor %}
-	</table>
+	</form>
+</table>
 	
 {% endblock %}

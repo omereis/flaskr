@@ -40,6 +40,7 @@ def close_db(error):
 
 @app.route('/')
 def show_db_entries():
+    print("show_db_entries")
     if session:
         print("session: " + str(session))
     else:
@@ -47,13 +48,18 @@ def show_db_entries():
     db = get_db()
     cur = db.execute('select * from entries order by id desc')
     blog_entries = cur.fetchall()
-    print("show_db_entries")
     strLink = "'show_entries.html', entries=blog_entries"
     print ("show_db_entris: %s" % strLink)
-    blog_title = ""
+    blog_title = "my entry"
     return render_template('show_entries.html', entries=blog_entries, blog_title=blog_title)
 #    return render_template('show_entries.html', entries=blog_entries)
 #    return render_template(strLink)
+
+"""
+@app.route('/href_click')
+def href_click1():
+    return render_template('show_entries.html')
+"""
 
 @app.route('/href_click')
 def href_click():
@@ -64,6 +70,8 @@ def href_click():
     db = get_db()
     cur = db.execute('select * from entries order by id desc')
     blog_entries = cur.fetchall()
+    print("\nhref_click, 'blog_title': \"" + blog_title + "\"\n")
+#    return render_template('show_entries.html')
     return render_template('show_entries.html', entries=blog_entries, blog_title=blog_title)
 #    return redirect(url_for('show_db_entries'))
 
@@ -85,11 +93,20 @@ def add_entry():
 #def on_title_click(param):
 def on_title_click():
     param =  None
-    print("on_title_click")
-    if session.get('logged_in') and param:
+    print("\non_title_click\n")
+    if session:
+        print("session: " + str(session))
+    else:
+        print ("session is null")
+    print("request: " + str(request))
+    print("request.form: " + str(request.form))
+    if session.get('logged_in'):
+#    if session.get('logged_in') and param:
         print("logged in")
         try:
             print ("preparing for request")
+            print ("request.form: " + str(request.form))
+            print ("len(request.form: " + str(len(request.form)) + "\n")
             blog_entry_id = request.form['id']
             print ("request granted")
             print ("param: %d" % param)
@@ -101,7 +118,9 @@ def on_title_click():
             blog_entry = cur.fetchall()
             print(strSql)
         except Exception as excp:
-            print ("Error:\n" + str(excp.args))
+            print ("Error: " + str(excp.args))
+    else:
+        print("logged out")
     return redirect(url_for('show_db_entries'))
 
 @app.route('/login', methods=['GET', 'POST'])
